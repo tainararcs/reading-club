@@ -60,6 +60,21 @@ O sistema permite o controle de usuários, revistas, caixas, empréstimos, devol
   <img src="assets/addcomic.png" alt="RPC">
 </div>
 
+## Regras de Negócio Importantes
+
+Apenas ADMIN pode:
+- Cadastrar caixas
+- Cadastrar revistas
+
+Usuário só pode:
+- Ter um empréstimo ativo
+
+Revistas emprestadas:
+- Ficam indisponíveis até devolução
+
+Usuários não ativados:
+- Não podem acessar o sistema
+
 
 ## Tecnologias Utilizadas
 
