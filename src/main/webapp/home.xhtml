@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+	
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Reading Club - Home</title>
+		
+		<!-- BootStrap -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"/>
+
+		<!-- Favicon -->
+	    <link rel="icon" type="image/x-icon" href="resources/favicon/comics.png"/>
+	    
+	    <!-- CSS --> 
+	    <link rel="stylesheet" href="resources/css/home.css" />
+	</h:head>
+	
+	<h:body>
+		<p:messages autoUpdate="true" showDetail="false" />
+		
+		<h1>Reading Club</h1>
+		
+		<span class="user-bar">
+			<i class="bi bi-person-circle"></i> #{loginMB.loggedUser.name}
+			<h:form>
+				<p:commandButton value="Logout" action="#{loginMB.logout}" ajax="false" icon="pi pi-sign-out" />
+			</h:form>
+		</span>
+		
+		
+		<div class="cards">
+			<!-- Admin -->
+			<p:link outcome="adduser" rendered="#{loginMB.admin}">
+			   <i class="bi bi-person-square"></i>Cadastrar Usuários
+			   <p class="card-description">Adicione usuários ao sistema e autorize o acesso aos empréstimos</p>
+			</p:link>
+	
+			<p:link outcome="addcomic" rendered="#{loginMB.admin}">
+			   <i class="bi bi-book-half"></i>Cadastrar Revistas
+			   <p class="card-description">Cadastre novas revistas e mantenha o acervo atualizado</p>
+			</p:link>
+			
+			<p:link outcome="addbox" rendered="#{loginMB.admin}">
+			   <i class="bi bi-box-fill"></i>Cadastrar Caixas
+			   <p class="card-description">Organize e controle as caixas de armazenamento do acervo físico</p>
+			</p:link>
+			
+			<p:link outcome="addborrowing" rendered="#{loginMB.admin}">
+			   <i class="bi bi-cart-plus-fill"></i>Cadastrar empréstimo
+			   <p class="card-description">Faça o empréstimo de revistas do acervo disponível para alguém</p>
+			</p:link>
+			
+			<p:link outcome="showborrowings" rendered="#{loginMB.admin}">
+			   <i class="bi bi-arrow-clockwise"></i>Histórico de empréstimos
+			   <p class="card-description">Visualize todos os empréstimos realizados, devoluções e histórico completo</p>
+			</p:link>
+			
+			<p:link outcome="showreport" rendered="#{loginMB.admin}">
+			   <i class="bi bi-postcard-fill"></i>Gerar relatório
+			   <p class="card-description">Crie relatórios detalhados do sistema e visualize a situação dos empréstimos</p>
+			</p:link>
+			
+			<!-- User -->
+			<p:link outcome="addborrowing" rendered="#{loginMB.user}">
+			   <i class="bi bi-cart-plus-fill"></i>Solicitar empréstimo
+			   <p class="card-description">Solicite um novo empréstimo de revistas do acervo disponível</p>
+			</p:link>
+			
+			<p:link outcome="showcomics" rendered="#{loginMB.user}">
+				<i class="bi bi-card-list"></i>Listar Revistas
+				<p class="card-description">Visualize as revistas cadastradas e verifique disponibilidade para empréstimo</p>
+			</p:link>
+			
+			<p:link outcome="showborrowings" rendered="#{loginMB.user}">
+			   <i class="bi bi-cart-check-fill"></i>Histórico de empréstimos
+			   <p class="card-description">Visualize seus empréstimos realizados, devoluções e histórico completo</p>
+			</p:link>
+		</div>
+	</h:body>
+</html>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+  	  xmlns:p="http://primefaces.org/ui"
+  	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+  	  
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Reading Club - Relatório de Empréstimos</title>
+		
+		<!-- Favicon -->
+	    <link rel="icon" type="image/x-icon" href="resources/favicon/comics.png"/>
+	    
+	    <!-- BootStrap -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"/>
+		
+	    <!-- CSS --> 
+	    <link rel="stylesheet" href="resources/css/form.css" />
+	</h:head>
+	
+	<h:body>
+		<ui:include src="menu.xhtml"/>
+		<ui:include src="header.xhtml"/>
+		
+		<h1>Relatório de Empréstimos</h1>
+		<p:messages autoUpdate="true" showDetail="false" />
+		
+		<h:form id="reportForm">
+			<p:tabView>
+			    <!-- Todas as revistas emprestadas -->
+			    <p:tab title="Revistas Emprestadas">
+			        <p:dataTable value="#{reportMB.allBorrowings}" var="b" paginator="true" rows="10" responsiveLayout="scroll">
+			            <p:column headerText="ID">#{b.id}</p:column>
+			            <p:column headerText="Usuário">#{b.user.name}</p:column>
+			            <p:column headerText="Coleção">#{b.comic.collection}</p:column>
+			            <p:column headerText="Número da Edição">#{b.comic.editionNumber}</p:column>
+			            <p:column headerText="Data Empréstimo">#{b.checkoutDate}</p:column>
+			            <p:column headerText="Previsão Retorno">#{b.expectedReturnDate}</p:column>
+			        </p:dataTable>
+			    </p:tab>
+			
+			    <!-- Empréstimos em atraso -->
+			    <p:tab title="Empréstimos em Atraso">
+			        <p:dataTable value="#{reportMB.overdueBorrowings}" var="b" paginator="true" rows="10" responsiveLayout="scroll">
+			            <p:column headerText="ID">#{b.id}</p:column>
+			            <p:column headerText="Usuário">#{b.user.name}</p:column>
+			            <p:column headerText="Coleção">#{b.comic.collection}</p:column>
+			            <p:column headerText="Número da Edição">#{b.comic.editionNumber}</p:column>
+			            <p:column headerText="Data Empréstimo">#{b.checkoutDate}</p:column>
+			            <p:column headerText="Previsão Retorno">#{b.expectedReturnDate}</p:column>
+			        </p:dataTable>
+			    </p:tab>
+			
+			    <!-- Empréstimos por usuário -->
+			    <p:tab title="Empréstimos por Usuário">
+			    	 <p:panelGrid columns="2">
+				        <p:inputText value="#{reportMB.userCpf}" placeholder="CPF do usuário" />
+				        <p:commandButton value="Filtrar" action="#{reportMB.filterByUser}" update="userTable" />
+				    </p:panelGrid>
+			    
+			        <p:dataTable id="userTable" value="#{reportMB.userBorrowings}" var="b" paginator="true" rows="10" responsiveLayout="scroll">
+			            <p:column headerText="ID">#{b.id}</p:column>
+			            <p:column headerText="Coleção">#{b.comic.collection}</p:column>
+			            <p:column headerText="Número da Edição">#{b.comic.editionNumber}</p:column>
+			            <p:column headerText="Data Empréstimo">#{b.checkoutDate}</p:column>
+			            <p:column headerText="Previsão Retorno">#{b.expectedReturnDate}</p:column>
+			            <p:column headerText="Devolvido">#{b.returnDate != null ? b.returnDate : 'Ainda não devolvido'}
+			            </p:column>
+			        </p:dataTable>
+			    </p:tab>
+			</p:tabView>
+		</h:form>
+	</h:body>
+</html>

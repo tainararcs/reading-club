@@ -1,0 +1,698 @@
+@charset "UTF-8";
+/* Import Google Fonts */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+    --primary-green: #10b981;
+    --primary-green-dark: #059669;
+    --primary-green-darker: #047857;
+    --primary-green-light: #34d399;
+    
+    --white: #ffffff;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 0.75rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.12);
+    --shadow-lg: 0 10px 15px rgba(0,0,0,0.15);
+    --shadow-xl: 0 20px 25px rgba(0,0,0,0.2);
+    --transition: 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', Arial, sans-serif;
+    background: var(--gray-50);
+    color: var(--gray-900);
+    line-height: 1.6;
+    margin-left: 280px; /* Compensa largura do menu */
+    padding: 0;
+    min-height: 100vh;
+}
+
+/* Barra do usuário */
+.user-bar {
+    max-width: 1300px;
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 15px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* Ícone do usuário */
+.user-bar .bi {
+    font-size: 1.6rem;
+    color: var(--primary-green-dark);
+}
+/* Botão Logout */
+.logout-btn,
+.user-bar .ui-button {
+    background: #059669 !important;
+    border: none !important;
+    color: #fff !important;
+    border-radius: 8px !important;
+    padding: 6px 8px !important;
+    font-weight: 600;
+}
+.user-bar .ui-button:hover,
+.logout-btn:hover {
+    background: #047857 !important;
+}
+/* Títulos */
+body > h1 {
+	color:  var(--primary-green-dark);
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: var(--spacing-2xl) auto var(--spacing-xl);
+    margin-left: 5rem;
+    padding-bottom: var(--spacing-md);
+    position: relative;
+}
+
+/* Mensagens do sistema */
+.ui-messages,
+.p-messages {
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: var(--radius-lg);
+    border: none !important;
+    box-shadow: var(--shadow-md);
+    background: pink !important;
+}
+
+.ui-messages-info,
+.p-message-info {
+    background: #dbeafe !important;
+    border-left: 4px solid #3b82f6 !important;
+    color: #1e40af !important;
+}
+
+.ui-messages-warn,
+.p-message-warn {
+    background: #fef3c7 !important;
+    border-left: 4px solid #f59e0b !important;
+    color: #92400e !important;
+}
+
+.ui-messages-error,
+.p-message-error {
+    background: #fee2e2 !important;
+    border-left: 4px solid #ef4444 !important;
+    color: #991b1b !important;
+}
+
+.ui-messages-success,
+.p-message-success {
+    background: #d1fae5 !important;
+    border-left: 4px solid var(--primary-green) !important;
+    color: var(--primary-green-darker) !important;
+}
+
+.auto-dismiss {
+    animation: messageFade 5s ease-in-out forwards;
+}
+
+@keyframes messageFade {
+    0% { opacity: 1; transform: translateY(0); }
+    80% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-20px); pointer-events: none; }
+}
+
+/* Formulários */
+.ui-panel,
+.p-panel {
+	display: flex;
+    flex-direction: column; /* Empilha os campos verticalmente */
+    gap: var(--spacing-lg);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    border: none !important;
+    margin-top: 5rem;
+    margin-bottom: var(--spacing-xl);
+    margin-left: 10rem;
+    margin-right: 10rem;
+    overflow: hidden;
+    background: var(--white) !important;
+    box-sizing: border-box;
+}
+
+.ui-panel-titlebar,
+.p-panel-header {
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-dark) 100%) !important;
+    color: var(--white) !important;
+    padding: var(--spacing-lg) var(--spacing-xl) !important;
+    border: none !important;
+    border-radius: 0 !important;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.ui-panel-content,
+.p-panel-content {
+    padding: var(--spacing-2xl) var(--spacing-xl) !important;
+    background: var(--white) !important;
+}
+
+/* Labels */
+.ui-outputlabel,
+.p-outputlabel,
+label {
+	margin-top: 2rem;
+    font-weight: 700;
+    color: var(--gray-700);
+    font-size: 1.4rem;
+    margin-bottom: var(--spacing-xs);
+    display: block;
+}
+
+.field-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    width: 100%;
+}
+
+/* Inputs */
+.ui-inputtext,
+.p-inputtext,
+.ui-selectonemenu,
+.p-selectonemenu,
+.ui-inputmask,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+select {
+    display: inline-flex;
+    align-items: center;
+    height: auto;
+    width: 100% !important;
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+    border: 2px solid var(--gray-200);
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    transition: all var(--transition);
+    background: var(--white);
+    color: var(--gray-900);
+}
+
+.ui-inputtext:focus,
+.p-inputtext:focus,
+.ui-selectonemenu:focus,
+.p-selectonemenu:focus,
+input:focus,
+select:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.ui-inputtext:hover,
+.p-inputtext:hover,
+input:hover,
+select:hover {
+    border-color: var(--gray-300);
+}
+
+/* Inputs desabilitados/readonly */
+.ui-inputtext:disabled,
+.ui-inputtext[readonly],
+input:disabled,
+input[readonly] {
+    background: var(--gray-100);
+    color: var(--gray-500);
+    cursor: not-allowed;
+}
+
+/* Select/Dropdown customizado */
+.ui-selectonemenu,
+.p-selectonemenu {
+    position: relative;
+    cursor: pointer;
+}
+
+.ui-selectonemenu-trigger,
+.p-dropdown-trigger {
+    background: var(--gray-100) !important;
+    border-left: 2px solid var(--gray-200) !important;
+    color: var(--gray-600) !important;
+}
+
+/* Esconde os botões de datepicker por padrão */
+button.ui-datepicker-trigger {
+    display: none !important;
+}
+
+/* Container principal do datePicker */
+span.ui-calendar {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    position: relative !important;
+    height: auto !important;
+}
+
+/* Input do calendário */
+span.ui-calendar .ui-inputtext {
+    flex: 1 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    padding: 0.85rem 1rem !important;
+    border-radius: 10px 0 0 10px !important;
+    border: 2px solid var(--gray-200) !important;
+    border-right: none !important;
+    line-height: normal !important;
+    box-sizing: border-box !important;
+}
+
+/* Botão do calendário */
+span.ui-calendar button.ui-datepicker-trigger {
+    display: inline-flex !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: 50px !important;
+    width: auto !important;
+    min-width: 48px !important;
+    border-radius: 0 10px 10px 0 !important;
+    background: var(--primary-green) !important;
+    border: 2px solid var(--primary-green) !important;
+    border-left: none !important;
+    color: var(--white) !important;
+    cursor: pointer !important;
+    transition: all var(--transition) !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    padding: 0.85rem 1rem !important;
+    align-self: stretch !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    position: relative !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    text-align: center !important;          
+    vertical-align: middle !important;    
+}
+
+span.ui-calendar button.ui-datepicker-trigger:hover {
+    background: var(--primary-green-dark) !important;
+    border-color: var(--primary-green-dark) !important;
+}
+
+/* Ícone dentro do botão */
+span.ui-calendar button.ui-datepicker-trigger .ui-icon {
+    background-image: none !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 auto !important;             
+    text-indent: 0 !important;
+    line-height: 1 !important;
+    display: flex !important;              
+    align-items: center !important;         
+    justify-content: center !important;    
+}
+
+span.ui-calendar button.ui-datepicker-trigger .ui-icon:before {
+    content: "📅";
+    font-size: 1.2rem;
+    display: block;
+    margin: 0 !important;                  
+    padding: 0 !important;                  
+    line-height: 1 !important;             
+}
+
+/* Painel do calendário popup */
+.ui-datepicker {
+    border: none !important;
+    border-radius: var(--radius-lg) !important;
+    box-shadow: var(--shadow-xl) !important;
+    padding: var(--spacing-md) !important;
+    background: var(--white) !important;
+    margin-top: 5px;
+}
+
+/* Cabeçalho do calendário */
+.ui-datepicker-header {
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-dark) 100%) !important;
+    color: var(--white) !important;
+    padding: var(--spacing-md) !important;
+    border-radius: var(--radius-md) !important;
+    border: none !important;
+    margin-bottom: var(--spacing-md);
+}
+
+/* Botões de navegação do calendário */
+.ui-datepicker-prev,
+.ui-datepicker-next {
+    background: transparent !important;
+    border: none !important;
+    color: var(--white) !important;
+    cursor: pointer;
+    padding: 0.5rem !important;
+    border-radius: var(--radius-sm) !important;
+}
+
+.ui-datepicker-prev:hover,
+.ui-datepicker-next:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Título do mês/ano */
+.ui-datepicker-title {
+    color: var(--white) !important;
+    font-weight: 600;
+}
+
+/* Tabela do calendário */
+.ui-datepicker table {
+    width: 100%;
+    font-size: 0.9rem;
+}
+
+/* Cabeçalho dos dias da semana */
+.ui-datepicker th {
+    padding: 0.5rem !important;
+    color: var(--gray-700) !important;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Células dos dias */
+.ui-datepicker td {
+    padding: 0.25rem !important;
+    text-align: center;
+}
+
+.ui-datepicker td a,
+.ui-datepicker td span {
+    display: block;
+    padding: 0.5rem;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    color: var(--gray-700);
+    transition: all var(--transition);
+}
+
+/* Dia atual */
+.ui-datepicker-current-day a {
+    background: var(--primary-green) !important;
+    color: var(--white) !important;
+    font-weight: 600;
+}
+
+/* Hover nos dias */
+.ui-datepicker td a:hover {
+    background: var(--gray-100) !important;
+}
+
+/* Dias de outros meses */
+.ui-datepicker-other-month {
+    color: var(--gray-400) !important;
+}
+
+/* Botões */
+.ui-button,
+.p-button,
+button[type="submit"],
+input[type="submit"] {
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-dark) 100%) !important;
+    color: var(--white) !important;
+    border: none !important;
+    padding: 0.8rem 1.4rem !important;
+    border-radius: var(--radius-md) !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    cursor: pointer;
+    transition: all var(--transition);
+    box-shadow: var(--shadow-sm);
+    font-family: 'Inter', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    text-transform: none;
+    letter-spacing: 0.3px;
+}
+
+/* Centraliza botões dentro dos forms PrimeFaces */
+.ui-panel-content .ui-button,
+.p-panel-content .p-button {
+    display: block !important;
+    margin: 6rem auto 0 auto !important;
+}
+
+.ui-button:hover,
+.p-button:hover,
+button:hover {
+    background: linear-gradient(135deg, var(--primary-green-dark) 0%, var(--primary-green-darker) 100%) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+}
+
+.ui-button:active,
+.p-button:active,
+button:active {
+    transform: translateY(0);
+}
+
+/* Botão desabilitado */
+.ui-button:disabled,
+.p-button:disabled,
+.ui-button[disabled],
+button:disabled {
+    background: var(--gray-300) !important;
+    color: var(--gray-500) !important;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Ícones nos botões */
+.ui-button-icon-left,
+.p-button-icon {
+    font-size: 1.1rem;
+}
+
+/* Tabelas */
+.ui-datatable,
+.p-datatable {
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    margin-top: var(--spacing-xl);
+    margin-left: 5rem;
+    margin-right: 5rem;
+}
+
+.ui-datatable-header,
+.p-datatable-header {
+    background: var(--gray-100) !important;
+    padding: var(--spacing-lg) var(--spacing-xl) !important;
+    border: none !important;
+    font-weight: 600;
+    color: var(--gray-700);
+}
+
+/* Cabeçalho da tabela */
+.ui-datatable-thead > tr > th,
+.p-datatable-thead > tr > th {
+    background: linear-gradient(135deg, var(--primary-green-darker) 0%, var(--primary-green-dark) 100%) !important;
+    color: var(--white) !important;
+    padding: 1rem 1.25rem !important;
+    font-weight: 700 !important;
+    font-size: 0.95rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: none !important;
+    text-align: left;
+}
+
+/* Células da tabela */
+.ui-datatable-data > tr > td,
+.p-datatable-tbody > tr > td {
+    padding: 1rem 1.25rem !important;
+    border-bottom: 1px solid var(--gray-200) !important;
+    color: var(--gray-700);
+    font-size: 0.95rem;
+}
+
+/* Linhas alternadas */
+.ui-datatable-data > tr:nth-child(even),
+.p-datatable-tbody > tr:nth-child(even) {
+    background: var(--gray-50) !important;
+}
+
+/* Hover nas linhas */
+.ui-datatable-data > tr:hover,
+.p-datatable-tbody > tr:hover {
+    transform: translateY(2px);
+}
+
+/* Última linha sem borda */
+.ui-datatable-data > tr:last-child > td,
+.p-datatable-tbody > tr:last-child > td {
+    border-bottom: none !important;
+}
+
+/* Paginação */
+.ui-paginator,
+.p-paginator {
+    background: var(--gray-50) !important;
+    padding: var(--spacing-lg) var(--spacing-xl) !important;
+    border: none !important;
+    border-top: 2px solid var(--gray-200) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+}
+
+.ui-paginator-page,
+.p-paginator-page,
+.ui-paginator-prev,
+.p-paginator-prev,
+.ui-paginator-next,
+.p-paginator-next,
+.ui-paginator-first,
+.p-paginator-first,
+.ui-paginator-last,
+.p-paginator-last {
+    background: var(--white) !important;
+    color: var(--gray-700) !important;
+    border: 2px solid var(--gray-200) !important;
+    padding: 0.5rem 0.75rem !important;
+    border-radius: var(--radius-sm) !important;
+    font-weight: 600;
+    min-width: 40px;
+    text-align: center;
+    transition: all var(--transition);
+}
+
+.ui-paginator-page:hover,
+.p-paginator-page:hover,
+.ui-paginator-prev:hover,
+.p-paginator-prev:hover,
+.ui-paginator-next:hover,
+.p-paginator-next:hover {
+    background: var(--primary-green-light) !important;
+    border-color: var(--primary-green) !important;
+    color: var(--white) !important;
+}
+
+.ui-state-active,
+.p-highlight {
+    background: var(--primary-green) !important;
+    border-color: var(--primary-green) !important;
+    color: var(--white) !important;
+}
+
+/* Tabs */
+.ui-tabview,
+.p-tabview {
+    background: transparent !important;
+    border: none !important;
+    margin-left: 5rem;
+    margin-right: 5rem;
+}
+
+.ui-tabview-nav,
+.p-tabview-nav {
+    background: transparent !important;
+    border: none !important;
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+    padding: 0 !important;
+}
+
+.ui-tabview-nav li,
+.p-tabview-nav li {
+    margin: 0 !important;
+    background: var(--white) !important;
+    border-radius: var(--radius-md) var(--radius-md) 0 0 !important;
+    border: 2px solid var(--gray-200) !important;
+    border-bottom: none !important;
+    transition: all var(--transition);
+}
+
+.ui-tabview-nav li:hover,
+.p-tabview-nav li:hover {
+    background: var(--gray-50) !important;
+}
+
+.ui-tabview-nav li.ui-state-active,
+.p-tabview-nav li.p-highlight {
+    color: linear-gradient(180deg, #047857 0%, #065f46 100%);
+}
+
+.ui-tabview-nav li a,
+.p-tabview-nav li a {
+    color: var(--gray-700) !important;
+    padding: 0.9rem 1.5rem !important;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.ui-tabview-panels,
+.p-tabview-panels {
+    background: var(--white) !important;
+    border: none !important;
+    border-radius: var(--radius-xl) !important;
+    box-shadow: var(--shadow-lg);
+    padding: var(--spacing-xl) !important;
+}
+
+/* PANELGRID */
+.ui-panelgrid,
+.p-panelgrid {
+    width: 100%;
+    margin-bottom: var(--spacing-lg);
+    background: var(--gray-50);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--gray-200);
+}
+
+.ui-panelgrid tr,
+.p-panelgrid tr {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--spacing-md);
+    align-items: end;
+}
+
+.ui-panelgrid td,
+.p-panelgrid td {
+    padding: var(--spacing-xs) !important;
+    border: none !important;
+}

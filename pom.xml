@@ -1,0 +1,184 @@
+<project xmlns="https://maven.apache.org/POM/4.0.0" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>ReadingClub</groupId>
+  <artifactId>ReadingClub</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/java</directory>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+        <configuration>
+          <release>21</release>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.2.3</version>
+      </plugin>
+    </plugins>
+  </build>
+  
+    <!-- Define common versions -->
+	<properties>
+	    <postgresql.version>42.2.27</postgresql.version>
+	    <hibernate.version>6.3.0.CR1</hibernate.version>
+	    <myfaces.version>4.0.1</myfaces.version>
+	    <jstl.version>1.2</jstl.version>
+	    <tomcat.version>10.1.13</tomcat.version>
+	    <cdi.version>3.0.0</cdi.version>
+	    <servlet.version>6.0.0</servlet.version>
+	    <annotation.version>2.1.1</annotation.version>
+	    <jstl.api.version>2.0.0</jstl.api.version>
+	    <jakartaee.version>10.0.0</jakartaee.version>
+	    <weld.version>4.0.0.Final</weld.version>
+	    <faces.version>4.0.4</faces.version>
+	    <jsf-api.version>2.2.9</jsf-api.version>
+	    <jsf-impl.version>2.2.9</jsf-impl.version>
+	</properties>
+    
+	<dependencies>
+		<dependency>
+		    <groupId>jakarta.servlet</groupId>
+		    <artifactId>jakarta.servlet-api</artifactId>
+		    <scope>provided</scope>
+		</dependency>
+
+	    <!-- Jakarta EE Dependencies, fornece as interfaces e classes da especificação Servlet. provided, pois é necessária apenas para compilação -->
+	  	<dependency>
+		    <groupId>jakarta.servlet</groupId>
+		    <artifactId>jakarta.servlet-api</artifactId>
+		    <version>6.0.0</version>
+		    <scope>provided</scope>
+		</dependency>
+	
+		<!-- Fornece anotações padrão do Jakarta EE, utilizadas pelo JSF -->
+	    <dependency>
+	        <groupId>jakarta.annotation</groupId>
+	        <artifactId>jakarta.annotation-api</artifactId>
+	        <version>${annotation.version}</version>
+	    </dependency>
+	    
+	    <!-- API da JSTL (JSP Standard Tag Library) -->
+	    <dependency>
+	        <groupId>jakarta.servlet.jsp.jstl</groupId>
+	        <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+	        <version>${jstl.api.version}</version>
+	    </dependency>
+	    
+	    <dependency>
+		    <groupId>jakarta.persistence</groupId>
+		    <artifactId>jakarta.persistence-api</artifactId>
+		    <version>3.1.0</version>
+		</dependency>
+		
+		<!-- EL -->
+		<dependency>
+		    <groupId>jakarta.servlet.jsp</groupId>
+		    <artifactId>jakarta.servlet.jsp-api</artifactId>
+		    <version>3.1.1</version>
+		    <scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+		    <groupId>jakarta.el</groupId>
+		    <artifactId>jakarta.el-api</artifactId>
+		    <version>5.0.1</version>
+		    <scope>provided</scope>
+		</dependency>	
+	
+	    <!-- Agrupa todas as APIs Jakarta EE Web -->
+	    <dependency>
+	        <groupId>jakarta.platform</groupId>
+	        <artifactId>jakarta.jakartaee-web-api</artifactId>
+	        <version>${jakartaee.version}</version>
+	        <scope>provided</scope>
+	    </dependency>
+	    
+	    <!-- Implementação do CDI (Contexts and Dependency Injection) para ambientes Servlet -->
+	    <dependency>
+	        <groupId>org.jboss.weld.servlet</groupId>
+	        <artifactId>weld-servlet-shaded</artifactId>
+	        <version>${weld.version}</version>
+	    </dependency>
+	    
+	    <!-- PostgreSQL JDBC Driver, usado indiretamente pelo Hibernate/JPA -->
+	    <dependency>
+	        <groupId>org.postgresql</groupId>
+	        <artifactId>postgresql</artifactId>
+	        <version>${postgresql.version}</version>
+	    </dependency>
+	
+	    <!-- Hibernate Core -->
+	    <dependency>
+	        <groupId>org.hibernate.orm</groupId>
+	        <artifactId>hibernate-core</artifactId>
+	        <version>${hibernate.version}</version>
+	    </dependency>
+	
+	    <!-- Apache Tomcat, contém as classes internas do Tomcat -->
+	    <dependency>
+	        <groupId>org.apache.tomcat</groupId>
+	        <artifactId>tomcat-catalina</artifactId>
+	        <version>${tomcat.version}</version>
+	        <scope>provided</scope>
+	    </dependency>
+	    
+	    <!-- Implementação oficial do Jakarta Faces (JSF) -->
+	    <dependency>
+	        <groupId>org.glassfish</groupId>
+	        <artifactId>jakarta.faces</artifactId>
+	        <version>${faces.version}</version>
+	    </dependency>
+	
+	    <!-- JSF Dependencies -->
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>15.0.0</version>
+			<classifier>jakarta</classifier>
+		</dependency>
+		
+		<!-- API de Bean Validation, define as anotações e contratos -->
+		<dependency>
+		    <groupId>jakarta.validation</groupId>
+		    <artifactId>jakarta.validation-api</artifactId>
+		    <version>3.1.1</version>
+		</dependency>
+		
+		<!-- Implementação de referência da Bean Validation -->
+		<dependency>
+		    <groupId>org.hibernate.validator</groupId>
+		    <artifactId>hibernate-validator</artifactId>
+		    <version>8.0.1.Final</version>
+		</dependency>
+		
+		<!-- Jakarta Mail API -->
+		<dependency>
+		    <groupId>jakarta.mail</groupId>
+		    <artifactId>jakarta.mail-api</artifactId>
+		    <version>2.1.2</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.eclipse.angus</groupId>
+		    <artifactId>angus-mail</artifactId>
+		    <version>2.0.3</version>
+		</dependency>
+		
+		<!-- EJB -->
+		<dependency>
+		    <groupId>jakarta.ejb</groupId>
+		    <artifactId>jakarta.ejb-api</artifactId>
+		    <version>4.0.1</version>
+		</dependency>
+	</dependencies>
+</project>

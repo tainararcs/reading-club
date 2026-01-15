@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+  	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+  	  xmlns:p="http://primefaces.org/ui"
+  	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+  	  
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Reading Club - Revistas</title>
+		
+		<!-- BootStrap -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"/>
+
+		<!-- Favicon -->
+	    <link rel="icon" type="image/x-icon" href="resources/favicon/comics.png"/>
+	    
+	    <!-- CSS --> 
+	    <link rel="stylesheet" href="resources/css/form.css" />
+	</h:head>
+	
+	<h:body>
+	    <ui:include src="menu.xhtml"/>
+		<ui:include src="header.xhtml"/>
+		
+	    <h1>Revistas em Quadrinhos</h1>
+	
+	    <h:form>
+	        <p:messages autoUpdate="true" showDetail="false" />
+	
+	        <p:dataTable value="#{comicMB.comicsList}" var="c" paginator="true" rows="10" responsiveLayout="scroll">
+	
+	            <p:column headerText="ID">#{c.id}</p:column>
+	
+	            <p:column headerText="Coleção">#{c.collection}</p:column>
+	
+				<p:column headerText="Número da Edição">#{c.editionNumber}</p:column>
+				
+	            <p:column headerText="Ano da Revista">#{c.year}</p:column>
+					
+				<p:column headerText="Disponibilidade">
+					<h:panelGroup rendered="#{c.availability == false}">Indisponível</h:panelGroup>
+					<h:panelGroup rendered="#{c.availability == true}">Disponível</h:panelGroup>
+				</p:column>
+	        </p:dataTable>
+	    </h:form>
+	</h:body>
+</html>

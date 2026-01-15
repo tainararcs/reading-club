@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	  
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Reading Club - Registrar Usuário</title>
+		
+		<!-- BootStrap -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"/>
+
+		<!-- Favicon -->
+	    <link rel="icon" type="image/x-icon" href="resources/favicon/comics.png"/>
+	    
+	    <!-- CSS --> 
+	    <link rel="stylesheet" href="resources/css/form.css" />
+	</h:head>
+	
+	<h:body>
+		<ui:include src="menu.xhtml"/>
+		<ui:include src="header.xhtml"/>
+		
+		<h:form>
+	        <p:panel header="Registrar Usuário">
+	            <p:messages class="messages" autoUpdate="true" showDetail="true" />
+				
+				<p:outputLabel for="name" value="Nome" />
+	            <p:inputText id="name" value="#{userMB.user.name}" required="true" />
+	            
+	            <p:outputLabel for="cpf" value="CPF" />
+	            <p:inputMask id="cpf" value="#{userMB.user.cpf}" mask="999.999.999-99" placeholder="111.111.111-11" required="true" validatorMessage="CPF inválido" />
+	            
+				<p:outputLabel for="email" value="Email" />
+	            <p:inputText id="email" value="#{userMB.user.email}" placeholder="user@readingclub.com" required="true" validatorMessage="E-mail inválido">
+   					 <f:validateRegex  pattern="^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$" />
+        		</p:inputText>
+				
+				<p:outputLabel for="phoneNumber" value="Número de Telefone" />
+	            <p:inputMask id="phoneNumber" value="#{userMB.user.phoneNumber}" mask="(99) 99999-9999" placeholder="(32) 99999-9999" required="true" />
+				
+				<p:outputLabel for="birthDate" value="Data de Nascimento" />
+				<p:datePicker id="birthDate" value="#{userMB.user.birthDate}" pattern="dd/MM/yyyy" showIcon="true" required="true" maxdate="#{now}"/>
+				
+				<p:outputLabel for="login" value="Login" />
+	            <p:inputText id="login" value="#{userMB.user.login}" required="true" />
+				
+				<p:outputLabel for="password" value="Senha" />
+	            <p:inputText id="password" value="#{userMB.user.password}" required="true"/>
+	            
+				<p:outputLabel value="Perfil" />
+				<p:inputText value="user" readonly="true" />
+				
+	            <p:commandButton value="Registrar Usuário" action="#{userMB.insert}" ajax="false" />
+        	</p:panel>
+	    </h:form>
+	</h:body>
+</html>

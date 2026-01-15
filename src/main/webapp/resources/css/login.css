@@ -1,0 +1,304 @@
+@charset "UTF-8";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    top: -250px;
+    right: -250px;
+}
+
+body::after {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    bottom: -200px;
+    left: -200px;
+}
+
+.auth-container {
+    display: flex;
+    background:  linear-gradient(135deg, rgba(16,185,129,0.55), rgba(4,120,87,0.55)), url('../imgs/comic.jpg');
+	background-position: left;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-color: #065f46; /* fallback */
+    border-radius: 24px;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    max-width: 1450px;
+    width: 100%;
+    z-index: 1;
+    height: 80vh;      /* altura fixa da área inteira */
+    overflow: hidden;  /* imagem não cresce */         
+}
+
+.auth-image {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+    color: white;
+    position: relative;
+}
+
+
+.logo-section {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.logo-section h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 4em;
+    margin-bottom: 15px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.logo-section p {
+    font-size: 1.5em;
+    opacity: 0.95;
+    font-weight: 700;
+    line-height: 1.6;
+    max-width: 320px;
+    margin: 0 auto;
+}
+
+.auth-form {
+    flex: 1;
+    padding: 60px 55px;
+    display: grid;            
+    overflow-y: auto;
+    height: 100%;
+    min-height: 0;       
+    background: #fafafa;    
+}
+
+.form-wrapper {
+    margin: auto 0;             /* Centraliza vertical quando houver espaço */
+    width: 100%;
+}
+
+.form-panel {
+    display: none;
+}
+
+.form-panel.active {
+    display: block;
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-header {
+	text-align: center;
+    margin-bottom: 35px;
+}
+
+.form-header h2 {
+    font-family: 'Poppins', sans-serif;
+    color: #047857;
+    font-size: 2.2em;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.form-header p {
+    color: #6b7280;
+    font-size: 0.95em;
+}
+
+.form-group .ui-inputtext,
+.form-group .ui-inputmask,
+.form-group .ui-password,
+.form-group .ui-inputfield {
+    width: 100% !important;
+    border-radius: 10px;
+}
+
+.ui-inputtext:disabled,
+.ui-inputtext[readonly],
+input:disabled,
+input[readonly] {
+    background: var(--gray-100);
+    color: var(--gray-500);
+    cursor: not-allowed;
+}
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+/* Botão de envio */
+.form-group .ui-button {
+    width: 100%;
+    border-radius: 12px;
+    padding: 14px 18px;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper input:focus {
+    outline: none;
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16,185,129,0.5)
+}
+
+.form-group .ui-calendar,
+.form-group .ui-datepicker {
+    width: 100% !important;
+    display: flex;
+    align-items: center;
+}
+
+.ui-datepicker-trigger {
+    height: 40px !important;
+    border-radius: 10px !important;
+}
+
+.ui-button {
+    background: linear-gradient(135deg, #10b981, #059669) !important;
+    border-radius: 12px !important;
+    border: none !important;
+    padding: 14px 18px !important;
+    font-size: 1.05em !important;
+    font-weight: 600 !important;
+    transition: .3s;
+}
+
+.ui-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(16,185,129,0.4);
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(16, 185, 129, 0.4);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+.toggle-form {
+    text-align: center;
+    margin-top: 25px;
+    color: #6b7280;
+    font-size: 0.95em;
+}
+
+.toggle-form a {
+    color: #10b981;
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.toggle-form a:hover {
+    color: #047857;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 25px 0;
+    color: #9ca3af;
+    font-size: 0.9em;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e5e7eb;
+}
+
+.divider span {
+    padding: 0 15px;
+}
+
+.date-input-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.2fr;
+    gap: 10px;
+}
+
+.date-input-group select {
+    padding: 14px 12px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 1em;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+    background: white;
+    cursor: pointer;
+}
+
+.date-input-group select:focus {
+    outline: none;
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+@media (max-width: 768px) {
+    .auth-container {
+        flex-direction: column;
+    }
+
+    .auth-image {
+        padding: 40px 20px;
+    }
+
+    .logo-section h1 {
+        font-size: 2.2em;
+    }
+
+    .auth-form {
+        padding: 40px 30px;
+    }
+
+    .form-header h2 {
+        font-size: 1.8em;
+    }
+}

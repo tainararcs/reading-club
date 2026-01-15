@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <h:head>
+        <title>Ativação de Conta - Clube da Leitura</title>
+        
+        <!-- Favicon -->
+	    <link rel="icon" type="image/x-icon" href="resources/favicon/comics.png"/>
+	    
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background: linear-gradient(180deg, #047857 0%, #065f46 100%);
+                height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0;
+            }
+            
+            h1 {
+            	margin-bottom: 6rem;
+            	color: #047857;
+            }
+            
+            a {
+            	display: inline-block;
+            	border-top: 3rem;
+            	text-decoration: none;
+            	font-size: 1.2rem;
+            	color: #047857;
+            }
+            
+            a:hover {
+            	transform: translateY(5px);
+            }
+            
+            .activation-box {
+                background: white;
+                padding: 100px;
+                border-radius: 10px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                text-align: center;
+                max-width: 800px;
+                width: 90%;
+            }
+            
+            .success { color: #4CAF50; }
+            
+            .error { color: #f44336; }
+            
+            .loading { color: #ff9800; }
+        </style>
+    </h:head>
+    
+    <h:body>
+        <div class="activation-box">
+            <h1>Ativação de Conta</h1>
+            
+            <!-- Liga o parâmetro da URL ao atributo cpf do bean -->
+		    <f:metadata>
+		        <f:viewParam name="cpf" value="#{activateMB.cpf}" />
+		        
+		        <!-- Chama o método automaticamente -->
+		        <f:viewAction action="#{activateMB.activate}" />
+		    </f:metadata>
+		
+		    <h2>Sua conta foi ativada com sucesso!</h2>
+		    
+		    <p><a href="login.xhtml">Clique aqui para fazer login</a></p>
+        </div>
+    </h:body>
+</html>
