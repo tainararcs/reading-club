@@ -1,5 +1,6 @@
 package br.trcs.rc.model;
 
+import br.trcs.rc.utils.Consts;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,17 +9,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 /**
- * Entidade que representa uma revista (quadrinho) do acervo.
- * <br>
- * Armazena informações de identificação da revista, como coleção,
- * número da edição, ano de publicação e disponibilidade para empréstimo.
- * <br>
+ * Entidade que representa uma revista (quadrinho) do acervo. Armazena informações de identificação da revista, 
+ * como coleção, número da edição, ano de publicação e disponibilidade para empréstimo.
  * Cada revista pertence a uma caixa física identificada pelo {@code boxId}.
  */
 @Entity
-@Table(name = "comics")
+@Table(name = Consts.COMIC_TABLE)
 public class Comic {
-	
 	/**
      * Identificador único da revista.
      * Gerado automaticamente pelo banco de dados.
@@ -45,13 +42,13 @@ public class Comic {
 	/**
      * Indica se a revista está disponível para empréstimo.
      */
-	private Boolean availability;
+	private boolean availability;
 	
 	/**
      * Identificador da caixa onde a revista está armazenada.
      */
 	@Column(nullable = false)
-	private Integer boxId;
+	private int boxId;
 	
 	public Integer getId() {
 		return id;
@@ -85,19 +82,19 @@ public class Comic {
 		this.year = year;
 	}
 	
-	public Boolean getAvailability() {
+	public boolean getAvailability() {
 		return availability;
 	}
 	
-	public void setAvailability(Boolean availability) {
+	public void setAvailability(boolean availability) {
 		this.availability = availability;
 	}
 	
-	public Integer getBoxId() {
+	public int getBoxId() {
 		return boxId;
 	}
 	
-	public void setBoxId(Integer boxId) {
+	public void setBoxId(int boxId) {
 		this.boxId = boxId;
 	}
 }

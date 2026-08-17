@@ -10,24 +10,19 @@
   	  
 	<h:head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>Reading Club - Registrar Empréstimo</title>
-		
+		<title>#{appMB.readingClub} - #{appMB.registerBorrowing}</title>
 		<!-- BootStrap -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"/>
-
-		<!-- Favicon -->
 	    <link rel="icon" type="image/x-icon" href="resources/favicon/comics.png"/>
-	    
-	    <!-- CSS --> 
 	    <link rel="stylesheet" href="resources/css/form.css" />
 	</h:head>
 	
 	<h:body>
-		<ui:include src="menu.xhtml"/>
-		<ui:include src="header.xhtml"/>
+		<ui:include src="#{appMB.menuHtml}"/>
+		<ui:include src="#{appMB.headerHtml}"/>
 		
 		<h:form>
-        	<p:panel header="Registrar Empréstimo">
+        	<p:panel header="#{appMB.registerBorrowing}">
         		<p:messages showDetail="true" />
         		
 				<p:outputLabel for="user" value="Usuário" />
@@ -48,14 +43,13 @@
 				    <f:selectItems value="#{comicMB.availablesList}" var="c" itemLabel="#{c.collection}" itemValue="#{c.id}" />
 				</p:selectOneMenu>
 
-
 				<p:outputLabel for="checkoutDate" value="Data do Empréstimo" />
 				<p:datePicker id="checkoutDate" required="true" readonly="true" value="#{borrowingMB.borrowing.checkoutDate}" />
 				
 				<p:outputLabel for="expectedReturnDate" value="Data para retorno" />
 				<p:datePicker id="expectedReturnDate" required="true" readonly="true" value="#{borrowingMB.borrowing.expectedReturnDate}" />
 				
-				<p:commandButton value="Registrar Empréstimo" action="#{borrowingMB.insert}" ajax="false" />
+				<p:commandButton value="#{appMB.registerBorrowing}" action="#{borrowingMB.insert}" ajax="false" />
 			</p:panel>
 		</h:form>
 	</h:body>

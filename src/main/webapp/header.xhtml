@@ -8,15 +8,14 @@
 
 	<h:head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		
-		<h:outputScript name="js/messages.js" />
+		<h:outputScript name="js/#{appMB.messagesJs}" />
 	</h:head>
 	
 	<h:body>
 		<span class="user-bar">
 			<i class="bi bi-person-circle"></i> #{loginMB.loggedUser.name}
 			<h:form>
-				<p:commandButton value="Logout" action="#{loginMB.logout}" ajax="false" icon="pi pi-sign-out" />
+				<p:commandButton value="#{appMB.logout}" action="#{loginMB.logout}" ajax="false" icon="pi pi-sign-out" />
 			</h:form>
 		</span>
 	</h:body>

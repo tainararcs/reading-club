@@ -9,24 +9,19 @@
       
 	<h:head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>Reading Club - Registrar Caixa</title>
-		
+		<title>#{appMB.readingClub} - #{appMB.registerBox}</title>
 		<!-- BootStrap -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"/>
-
-		<!-- Favicon -->
 	    <link rel="icon" type="image/x-icon" href="resources/favicon/comics.png"/>
-	    
-	    <!-- CSS --> 
 	    <link rel="stylesheet" href="resources/css/form.css" />
 	</h:head>
 	
 	<h:body>
-		<ui:include src="menu.xhtml"/>
-		<ui:include src="header.xhtml"/>
+		<ui:include src="#{appMB.menuHtml}"/>
+		<ui:include src="#{appMB.headerHtml}"/>
 		
 		<h:form>
-        	<p:panel header="Registrar Caixa">
+        	<p:panel header="#{appMB.registerBox}">
         		<p:messages showDetail="true" />
         		
 				<p:outputLabel for="number" value="Número da caixa" />
@@ -35,7 +30,7 @@
 			    <p:outputLabel for="color" value="Cor da caixa" />
 				<p:inputText id="color" value="#{boxMB.box.color}" required="true" />
 				
-				<p:commandButton value="Registrar Caixa" action="#{boxMB.insert}" ajax="false" />
+				<p:commandButton value="#{appMB.registerBox}" action="#{boxMB.insert}" ajax="false" />
 			</p:panel>
 		</h:form>
 	</h:body>

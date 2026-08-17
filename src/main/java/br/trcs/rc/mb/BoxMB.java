@@ -67,26 +67,25 @@ public class BoxMB implements Serializable {
      * @return página de cadastro de caixa.
      */
 	public String insert() {	
-		if (!loginMB.isAdmin()) {
+		if (!loginMB.isAdmin()) 
 	        try {
-	            FacesContext.getCurrentInstance().getExternalContext().redirect("accessdenied.xhtml");
+	            FacesContext.getCurrentInstance().getExternalContext().redirect(Consts.ACCESS_DENIED_HTML);
 	        } catch (Exception ignored) {}
-	        return "addbox";
-	    }
 
         try {
             DAO<Box> dao = new DAO<Box>(Box.class);
             dao.insert(box);
 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Caixa registrada com sucesso"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(null, Consts.ADD_BOX_SUCCESS));
 
             box = new Box(); // Limpa o formulário.
-            return "addbox";
-            
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao registrar caixa", e.getMessage()));
+        	if (e.getMessage().contains("duplicate key"))
+        		 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, Consts.ALREADY_BOX_ERROR));
+        	else 
+        		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, Consts.ADD_BOX_ERROR));
         }
         
-        return "addbox";
+        return Consts.ADD_BOX_PAGE;
 	}
 }

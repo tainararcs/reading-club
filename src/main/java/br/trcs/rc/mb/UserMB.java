@@ -22,13 +22,12 @@ import jakarta.inject.Named;
 @Named(Consts.USER_MB)
 @ViewScoped
 public class UserMB implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 
 	/**
      * Perfil padrão atribuído aos usuários cadastrados.
      */
-	private static final String profile = "user";
+	private static final String PROFILE = "user";
 	
 	/**
      * Usuário atualmente manipulado no formulário.
@@ -61,7 +60,7 @@ public class UserMB implements Serializable {
      * @return perfil do usuário.
      */
     public static String getProfile() {
-		return profile;
+		return PROFILE;
 	}
 
 	/**
@@ -98,40 +97,34 @@ public class UserMB implements Serializable {
      */
 	public String insert() {
 		if (user.getBirthDate().isAfter(LocalDate.now())) {
-		    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Data inválida", "A data de nascimento não pode ser maior que hoje"));
-		    return "adduser";
+		    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, Consts.LATER_DATA_ERROR));
+		    return Consts.ADD_USER_PAGE;
 		}
 
         try {
         	// Remove formatação do CPF antes de salvar.
         	String cpfClean = user.getCpf().replace(".", "").replace("-", "");
         	user.setCpf(cpfClean);
-        	user.setProfile(profile);
+        	user.setProfile(PROFILE);
         	
         	user.setConfirmedEmail(false); 
         	user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
         	
-        	System.out.println(user.getProfile());
-        	
-            DAO<User> dao = new DAO<User>(User.class);
+        	DAO<User> dao = new DAO<User>(User.class);
             dao.insert(user);
             
             // Envia e-mail de confirmação de cadastro com link de ativação.
-            boolean emailSent = EmailService.sendActivationEmail(user.getEmail(), user.getName(), user.getCpf());
-            
-            if (emailSent) 
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cadastro realizado", "Verifique seu e-mail para ativar a conta."));
-            else 
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Cadastro realizado", "Sua conta não está ativa"));
+            EmailService.sendActivationEmail(user.getEmail(), user.getName(), user.getCpf());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, Consts.ADD_SUCCESS, Consts.CREDENTIALS_ERROR));
             
             user = new User(); // Limpa o formulário.
-            
-            return "adduser";
-            
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao registrar usuário", e.getMessage()));
+        	if (e.getMessage().contains("duplicate key"))
+        		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, Consts.ALREADY_USER_ERROR));
+        	else 
+        		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, e.getMessage()));
         }
         
-        return "adduser";
+        return Consts.ADD_USER_PAGE;
     }
 }

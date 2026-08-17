@@ -10,24 +10,19 @@
 	  
 	<h:head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>Reading Club - Registrar Usuário</title>
-		
+		<title>#{appMB.readingClub} - #{appMB.registerUser}</title>
 		<!-- BootStrap -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"/>
-
-		<!-- Favicon -->
 	    <link rel="icon" type="image/x-icon" href="resources/favicon/comics.png"/>
-	    
-	    <!-- CSS --> 
 	    <link rel="stylesheet" href="resources/css/form.css" />
 	</h:head>
 	
 	<h:body>
-		<ui:include src="menu.xhtml"/>
-		<ui:include src="header.xhtml"/>
+		<ui:include src="#{appMB.menuHtml}"/>
+		<ui:include src="#{appMB.headerHtml}"/>
 		
 		<h:form>
-	        <p:panel header="Registrar Usuário">
+	        <p:panel header="#{appMB.registerUser}">
 	            <p:messages class="messages" autoUpdate="true" showDetail="true" />
 				
 				<p:outputLabel for="name" value="Nome" />
@@ -56,7 +51,7 @@
 				<p:outputLabel value="Perfil" />
 				<p:inputText value="user" readonly="true" />
 				
-	            <p:commandButton value="Registrar Usuário" action="#{userMB.insert}" ajax="false" />
+	            <p:commandButton value="#{appMB.registerUser}" action="#{userMB.insert}" ajax="false" />
         	</p:panel>
 	    </h:form>
 	</h:body>

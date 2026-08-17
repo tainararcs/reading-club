@@ -9,21 +9,16 @@
   	  
 	<h:head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>Reading Club - Relatório de Empréstimos</title>
-		
-		<!-- Favicon -->
-	    <link rel="icon" type="image/x-icon" href="resources/favicon/comics.png"/>
-	    
+		<title>#{appMB.readingClub} - Relatório</title>
 	    <!-- BootStrap -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"/>
-		
-	    <!-- CSS --> 
+		<link rel="icon" type="image/x-icon" href="resources/favicon/comics.png"/>
 	    <link rel="stylesheet" href="resources/css/form.css" />
 	</h:head>
 	
 	<h:body>
-		<ui:include src="menu.xhtml"/>
-		<ui:include src="header.xhtml"/>
+		<ui:include src="#{appMB.menuHtml}"/>
+		<ui:include src="#{appMB.headerHtml}"/>
 		
 		<h1>Relatório de Empréstimos</h1>
 		<p:messages autoUpdate="true" showDetail="false" />

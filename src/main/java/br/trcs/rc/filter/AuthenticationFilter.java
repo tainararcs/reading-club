@@ -29,10 +29,10 @@ public class AuthenticationFilter implements Filter {
     /**
      * Intercepta as requisições HTTP para páginas {@code .xhtml} e aplica as regras de autenticação e autorização.
      *
-     * @param request  requisição do cliente.
+     * @param request requisição do cliente.
      * @param response resposta HTTP.
-     * @param chain    cadeia de filtros.
-     * @throws IOException      em caso de erro de redirecionamento.
+     * @param chain cadeia de filtros.
+     * @throws IOException em caso de erro de redirecionamento.
      * @throws ServletException em caso de falha no processamento do filtro.
      */
     @Override
@@ -43,15 +43,8 @@ public class AuthenticationFilter implements Filter {
 
         String requestURI = req.getRequestURI();
 
-        boolean isPublicPage = requestURI.endsWith("login.xhtml")
-        					|| requestURI.contains("activate.xhtml")
-                            || requestURI.endsWith("accessdenied.xhtml")
-                            || requestURI.contains("/resources/")
-                            || requestURI.contains("/jakarta.faces.resource/")
-                            || requestURI.contains("/javax.faces.resource/");
-
         // Se for página pública, permite acesso.
-        if (isPublicPage) {
+        if (isPublicPage(requestURI)) {
             chain.doFilter(request, response);
             return;
         }
@@ -66,17 +59,27 @@ public class AuthenticationFilter implements Filter {
         }
 
         // Controle de acesso por perfil.
-        boolean isAdmin = loginMB.isAdmin();
-        boolean isAdminOnlyPage = requestURI.endsWith("adduser.xhtml")
-                               || requestURI.endsWith("addcomic.xhtml")
-                               || requestURI.endsWith("addbox.xhtml")
-                               || requestURI.endsWith("showreport.xhtml");
-
-        if (isAdminOnlyPage && !isAdmin) {
+        if (isAdminOnlyPage(requestURI) && ! loginMB.isAdmin()) {
             res.sendRedirect(req.getContextPath() + "/accessdenied.xhtml");
             return;
         }
 
         chain.doFilter(request, response);
+    }
+    
+    private boolean isPublicPage(String requestURI) {
+    	return requestURI.endsWith("login.xhtml")
+			|| requestURI.contains("activate.xhtml")
+		    || requestURI.endsWith("accessdenied.xhtml")
+		    || requestURI.contains("/resources/")
+		    || requestURI.contains("/jakarta.faces.resource/")
+		    || requestURI.contains("/javax.faces.resource/");
+    }
+    
+    private boolean isAdminOnlyPage(String requestURI) {
+    	return requestURI.endsWith("adduser.xhtml")
+            || requestURI.endsWith("addcomic.xhtml")
+            || requestURI.endsWith("addbox.xhtml")
+            || requestURI.endsWith("showreport.xhtml");
     }
 }

@@ -9,7 +9,6 @@ import br.trcs.rc.model.Comic;
 
 /**
  * DAO responsável pelas operações de acesso a dados da entidade {@link Borrowing}.
- * <br>
  * Centraliza as consultas relacionadas aos empréstimos, incluindo carregamento
  * das entidades associadas ({@code User} e {@code Comic}) quando necessário,
  * utilizando a infraestrutura genérica da superclasse {@link DAO}.
@@ -17,7 +16,6 @@ import br.trcs.rc.model.Comic;
 public class BorrowingDAO extends DAO<Borrowing> {
 
 	/**
-     * Construtor padrão.
      * Informa à superclasse qual entidade este DAO gerencia.
      * 
      * @param currentClass classe da entidade {@link Comic}.
@@ -32,7 +30,7 @@ public class BorrowingDAO extends DAO<Borrowing> {
      *
      * @return lista de todos os empréstimos com usuário e revista associados.
      */
-    public List<Borrowing> listAllInfo() {
+    public List<Borrowing> listAll() {
         String jpql = "SELECT b FROM Borrowing b JOIN FETCH b.user JOIN FETCH b.comic";
         return findByQuery(jpql, Collections.emptyMap());
     }
@@ -43,7 +41,7 @@ public class BorrowingDAO extends DAO<Borrowing> {
      * @param userCpf CPF do usuário.
      * @return lista de empréstimos do usuário informado.
      */
-    public List<Borrowing> listAllInfoByUser(String userCpf) {
+    public List<Borrowing> listAllByUser(String userCpf) {
         String jpql = "SELECT b FROM Borrowing b JOIN FETCH b.user JOIN FETCH b.comic WHERE b.user.cpf = :cpf";
         return findByQuery(jpql, Collections.singletonMap("cpf", userCpf));
     }
@@ -79,7 +77,7 @@ public class BorrowingDAO extends DAO<Borrowing> {
      * Verifica se um usuário possui algum empréstimo em aberto.
      *
      * @param cpf CPF do usuário.
-     * @return {@code true} se existir empréstimo em aberto; {@code false} caso contrário.
+     * @return {@code true} se existir empréstimo em aberto, {@code false} caso contrário.
      */
     public Boolean hasOpenBorrowing(String cpf) {
     	String jpql = "SELECT b FROM Borrowing b WHERE b.user.cpf = :cpf AND b.returnDate IS NULL";

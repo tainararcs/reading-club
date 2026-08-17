@@ -7,17 +7,15 @@ import br.trcs.rc.model.Comic;
 
 /**
  * DAO responsável pelas operações de acesso a dados da entidade {@link Comic}.
- * <br>
  * Esta classe encapsula as consultas relacionadas às revistas cadastradas,
  * delegando à superclasse {@link DAO} as operações genéricas de persistência.
  */
 public class ComicDAO extends DAO<Comic> {
 	
 	/**
-     * Construtor padrão.
      * Informa à superclasse qual entidade este DAO gerencia.
      * 
-     *  @param currentClass classe da entidade {@link Comic}.
+     * @param currentClass classe da entidade {@link Comic}.
      */
 	public ComicDAO(Class<Comic> currentClass) {
 		super(currentClass);

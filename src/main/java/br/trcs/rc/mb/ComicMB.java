@@ -87,12 +87,10 @@ public class ComicMB implements Serializable {
      * @return página de cadastro de revista.
      */
 	public String insert() {
-		if (!loginMB.isAdmin()) {
+		if (!loginMB.isAdmin()) 
 	        try {
-	            FacesContext.getCurrentInstance().getExternalContext().redirect("accessdenied.xhtml");
+	            FacesContext.getCurrentInstance().getExternalContext().redirect(Consts.ACCESS_DENIED_HTML);
 	        } catch (Exception ignored) {}
-	        return "addcomic";
-	    }
 
         try {
         	comic.setAvailability(true);
@@ -100,14 +98,13 @@ public class ComicMB implements Serializable {
             DAO<Comic> dao = new DAO<Comic>(Comic.class);
             dao.insert(comic);
 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Revista registrada com sucesso"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(null, Consts.ADD_COMIC_SUCCESS));
 
             comic = new Comic(); // Limpa o formulário.
-            return "addcomic";
-            
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao registrar revista", e.getMessage()));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, Consts.ADD_COMIC_ERROR));
         }
-        return "addcomic";
+        
+        return Consts.ADD_COMIC_PAGE;
 	}
 }

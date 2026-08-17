@@ -9,21 +9,16 @@
   	  
 	<h:head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>Reading Club - Revistas</title>
-		
+		<title>#{appMB.readingClub} - Revistas</title>
 		<!-- BootStrap -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"/>
-
-		<!-- Favicon -->
 	    <link rel="icon" type="image/x-icon" href="resources/favicon/comics.png"/>
-	    
-	    <!-- CSS --> 
 	    <link rel="stylesheet" href="resources/css/form.css" />
 	</h:head>
 	
 	<h:body>
-	    <ui:include src="menu.xhtml"/>
-		<ui:include src="header.xhtml"/>
+	    <ui:include src="#{appMB.menuHtml}"/>
+		<ui:include src="#{appMB.headerHtml}"/>
 		
 	    <h1>Revistas em Quadrinhos</h1>
 	
@@ -31,7 +26,6 @@
 	        <p:messages autoUpdate="true" showDetail="false" />
 	
 	        <p:dataTable value="#{comicMB.comicsList}" var="c" paginator="true" rows="10" responsiveLayout="scroll">
-	
 	            <p:column headerText="ID">#{c.id}</p:column>
 	
 	            <p:column headerText="Coleção">#{c.collection}</p:column>

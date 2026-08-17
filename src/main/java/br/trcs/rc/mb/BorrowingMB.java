@@ -108,19 +108,18 @@ public class BorrowingMB implements Serializable {
      *
      * @return lista de empréstimos.
      */
-
 	public List<Borrowing> getBorrowingsList() {
         if (borrowingsList == null) {
             BorrowingDAO dao = new BorrowingDAO(Borrowing.class);
 
             if (loginMB.isAdmin()) {
             	if (userCpf != null && !userCpf.trim().isEmpty()) 
-                    borrowingsList = dao.listAllInfoByUser(userCpf);
+                    borrowingsList = dao.listAllByUser(userCpf);
                 else 
-                    borrowingsList = dao.listAllInfo();
+                    borrowingsList = dao.listAll();
             }
             else 
-                borrowingsList = dao.listAllInfoByUser(loginMB.getLoggedUser().getCpf());
+                borrowingsList = dao.listAllByUser(loginMB.getLoggedUser().getCpf());
         }
         return borrowingsList;
     }
@@ -143,53 +142,34 @@ public class BorrowingMB implements Serializable {
      * @return página de cadastro de empréstimo.
      */
 	public String insert() {
-		System.out.println("CPF do usuário: " + borrowing.getUser() + " Id da revista: " + comicId);
-		System.out.println("Data de checkout: " + borrowing.getCheckoutDate()  + " Data para return: " + borrowing.getExpectedReturnDate());
-
+		if (comicId == null) {
+    	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, Consts.SELECT_COMIC_ERROR));
+    	    return Consts.ADD_BORROW_PAGE;
+    	}
+		
 	    try {
-	    	if (!checkUser()) return "addborrowing";
-	        
-	        // Verifica revista.
-	    	DAO<Comic> daoComic = new DAO<>(Comic.class);
-
-	    	if (comicId == null) {
-	    	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Selecione uma revista"));
-	    	    return "addborrowing";
-	    	}
+	    	User user = checkUser();
+	    	if (user == null) return Consts.ADD_BORROW_PAGE;
 	    	
-	    	Comic comic = daoComic.findById(comicId);
-	    	if (comic == null)
-	    	    throw new RuntimeException("Revista não encontrada");
-
-	        // Marca como indisponível.
-	        comic.setAvailability(false);
-	        daoComic.update(comic);
-	        
-	        // Vincula revista ao empréstimo.
-	        borrowing.setComic(comic);
-	        
-	        User user;
-	        if (loginMB.isAdmin()) 
-	            user = new UserDAO(User.class).findByCpf(userCpf);
-	        else 
-	            user = loginMB.getLoggedUser();
-
+	    	Comic comic = checkComic();
+	    	if (comic == null) return Consts.ADD_BORROW_PAGE;
+	    	
+	        // Vincula o usuário e a revista ao empréstimo.
 	        borrowing.setUser(user);
+	        borrowing.setComic(comic);
 
 	        // Salva empréstimo.
 	        DAO<Borrowing> dao = new DAO<>(Borrowing.class);
 	        dao.insert(borrowing);
 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Empréstimo registrado com sucesso"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(null, Consts.ADD_BORROW_SUCCESS));
 
             borrowing = new Borrowing(); // Limpa o formulário.
-            return "addborrowing";
-            
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao registrar empréstimo", e.getMessage()));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, Consts.ADD_BORROW_ERROR));
         }
 	    
-	    return "addborrowing";
+	    return Consts.ADD_BORROW_PAGE;
     }
 	
 	/**
@@ -204,10 +184,12 @@ public class BorrowingMB implements Serializable {
             DAO<Borrowing> dao = new DAO<>(Borrowing.class);
             dao.update(borrowing);
 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Devolução  de registrada", "Empréstimo " + borrowing.getId() + " devolvido hoje"));
-
+            FacesContext.getCurrentInstance().addMessage(
+            	null, 
+            	new FacesMessage(FacesMessage.SEVERITY_INFO, null, Consts.RETURN_COMIC_SUCCESS + String.format(" (%d)", borrowing.getId()))
+            );
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao registrar devolução", e.getMessage()));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, Consts.RETURN_COMIC_ERROR));
         }
     }
     
@@ -217,22 +199,40 @@ public class BorrowingMB implements Serializable {
      *
      * @return true se permitido, false caso contrário.
      */
-    private boolean checkUser() {
-    	// CPF do usuário do empréstimo.
-        String cpf;
-
-        if (loginMB.isAdmin()) 
-            cpf = userCpf; 
+    private User checkUser() {
+    	User user = null;
+    	
+    	if (loginMB.isAdmin()) 
+            user = new UserDAO(User.class).findByCpf(userCpf);
         else 
-            cpf = loginMB.getLoggedUser().getCpf(); 
-
-        // Verifica se usuário já possui empréstimo aberto.
+            user = loginMB.getLoggedUser();
+    	
+        // Verifica se usuário já possui empréstimo em aberto.
         BorrowingDAO borrowingDAO = new BorrowingDAO(Borrowing.class);
-        if (borrowingDAO.hasOpenBorrowing(cpf)) {
-        	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Não permitido", "Você já possui um empréstimo em aberto"));
-            return false;
+        if (user != null && borrowingDAO.hasOpenBorrowing(user.getCpf())) {
+        	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, null, Consts.ALREADY_BORROW_ERROR));
+        	return null;
         }
-        return true;
+        return user;
+    }
+    
+    /**
+     * Verifica se a revista existente está disponível para empréstimo.
+     * Em caso positivo, atualiza o status da mesma para 'indisponível'.
+     * @return
+     */
+    private Comic checkComic() {
+    	DAO<Comic> daoComic = new DAO<>(Comic.class);
+    	
+    	Comic comic = daoComic.findById(comicId);
+    	if (comic == null || comic.getAvailability() == false)
+    	    throw new RuntimeException(Consts.UNAVAIABLE_COMIC_ERROR);
+
+        // Marca como indisponível.
+        comic.setAvailability(false);
+        daoComic.update(comic);
+        
+        return comic;
     }
     
     /**
@@ -240,7 +240,7 @@ public class BorrowingMB implements Serializable {
      * Força o recarregamento da lista com o CPF informado.
      */
     public void filterByUser() {
-    	borrowingsList = null; // força recarregar com o novo CPF.
+    	borrowingsList = null; // Força recarregar com o novo CPF.
         getBorrowingsList();
     }
 }

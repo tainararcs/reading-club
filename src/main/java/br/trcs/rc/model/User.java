@@ -2,23 +2,19 @@ package br.trcs.rc.model;
 
 import java.time.LocalDate;
 
+import br.trcs.rc.utils.Consts;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 /**
- * Entidade que representa um usuário do sistema.
- * <br>
- * Armazena informações pessoais, credenciais de acesso e dados
- * relacionados à autenticação e comunicação (e-mail).
- * <br>
- * O identificador primário da entidade é o CPF do usuário.
+ * Entidade que representa um usuário do sistema. Armazena informações pessoais, credenciais de acesso e dados
+ * relacionados à autenticação e comunicação (e-mail). O identificador primário da entidade é o CPF do usuário.
  */
 @Entity
-@Table(name = "users")
+@Table(name = Consts.USER_TABLE)
 public class User {
-	
 	/**
      * CPF do usuário.
      * Atua como chave primária da entidade.
@@ -73,9 +69,8 @@ public class User {
      * Indica se o e-mail do usuário foi confirmado.
      * Utilizado para controle de envio de notificações e validação de comunicação.
      */
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	private Boolean confirmedEmail;
-	
 	
 	public String getCpf() {
 		return cpf;

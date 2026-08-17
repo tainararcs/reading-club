@@ -82,14 +82,14 @@ public class ReportMB implements Serializable {
     public List<Borrowing> getUserBorrowings() {
         if (userBorrowings == null && userCpf != null && !userCpf.isEmpty()) {
             BorrowingDAO dao = new BorrowingDAO(Borrowing.class);
-            userBorrowings = dao.listAllInfoByUser(userCpf);
+            userBorrowings = dao.listAllByUser(userCpf);
         }
         return userBorrowings;
     }
 
     /**
      * Aplica o filtro por usuário.
-     * Força o recarregamento da lista de empréstimos com base no CPF informado.
+     * Força o recarregamento da lista de empréstimos com base no CPF rmado.
      */
     public void filterByUser() {
         userBorrowings = null;

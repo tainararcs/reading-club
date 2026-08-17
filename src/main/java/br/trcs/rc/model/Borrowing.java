@@ -2,6 +2,7 @@ package br.trcs.rc.model;
 
 import java.time.LocalDate;
 
+import br.trcs.rc.utils.Consts;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -13,35 +14,32 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 /**
- * Entidade que representa um empréstimo de revista no sistema.
- * <br>
- * Cada empréstimo associa um {@link User} a uma {@link Comic},
+ * Entidade que representa um empréstimo de revista no sistema. Cada empréstimo associa um {@link User} a uma {@link Comic},
  * registrando as datas de retirada, devolução prevista e devolução efetiva.
  */
 @Entity
-@Table(name = "borrowings")
+@Table(name = Consts.BORROWING_TABLE)
 public class Borrowing {
-	
 	/**
      * Identificador único do empréstimo.
      * Gerado automaticamente pelo banco de dados.
      */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private int id;
 
 	/**
      * Usuário responsável pelo empréstimo.
      */
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "userCpf", nullable = false)
+	@JoinColumn(name = "usercpf", nullable = false)
 	private User user;
 	
 	/**
      * Revista emprestada.
      */
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "comicId", nullable = false)
+	@JoinColumn(name = "comicid", nullable = false)
 	private Comic comic;
 	
 	/**
@@ -62,12 +60,11 @@ public class Borrowing {
      */
 	private LocalDate returnDate;
 	
-	
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
 	
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	

@@ -19,7 +19,6 @@ import jakarta.inject.Named;
 @Named(Consts.LOGIN_MB)
 @SessionScoped
 public class LoginMB implements Serializable {
-
     private static final long serialVersionUID = 1L;
 
     /**
@@ -104,7 +103,7 @@ public class LoginMB implements Serializable {
      * @return {@code true} se for ADMIN, {@code false} caso contrário.
      */
 	public boolean isAdmin() {
-	    return loggedUser != null && "ADMIN".equalsIgnoreCase(loggedUser.getProfile());
+	    return loggedUser != null && Consts.ADMIN.equalsIgnoreCase(loggedUser.getProfile());
 	}
 	
 	/**
@@ -113,7 +112,7 @@ public class LoginMB implements Serializable {
      * @return {@code true} se for USER, {@code false} caso contrário.
      */
 	public boolean isUser() {
-	    return loggedUser != null && "USER".equalsIgnoreCase(loggedUser.getProfile());
+	    return loggedUser != null && Consts.USER.equalsIgnoreCase(loggedUser.getProfile());
 	}
 
 	/**
@@ -121,15 +120,14 @@ public class LoginMB implements Serializable {
 	 *
 	 * @return página de redirecionamento após login bem-sucedido.
 	 */
-    public String login() {    	    
+    public String login() {    
         UserDAO dao = new UserDAO(User.class);
         User user = dao.findByEmailAndPassword(email, SecurityUtils.encryptPassword(password));
-        
         
         if (user != null) {
         	// Verifica comfirmação de email.
         	if (!user.getConfirmedEmail()) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Conta pendente", "Sua conta ainda não foi ativada"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, Consts.ACTIVATED_ACCOUNT_ERROR, null));
                 return null;
             }
         	
@@ -142,7 +140,7 @@ public class LoginMB implements Serializable {
         	return "home?faces-redirect=true";
         }
 
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login inválido", "Email ou senha incorretos"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, Consts.CREDENTIALS_ERROR, null));
         return null; // Permanece na página.
     }
 

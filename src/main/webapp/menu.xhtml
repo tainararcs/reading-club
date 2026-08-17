@@ -9,59 +9,54 @@
 	  
 	<h:head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		
-		<!-- CSS --> 
 	    <link rel="stylesheet" href="resources/css/menu.css" />
 	</h:head>
 	
 	<h:body>
 		<div class="sidebar">
-		
-			<h2>Reading Club</h2>
+			<h2>#{appMB.readingClub}</h2>
 			
 			<div class="sidebar-menu">
-				
 				<p:link outcome="home">
-				   <i class="bi bi-house-door"></i>
-				   Home
+				   <i class="bi bi-house-door"></i> #{appMB.home}
 				</p:link>
 					
 	            <!-- ADMIN -->
 				<p:link outcome="adduser" rendered="#{loginMB.admin}">
-					<i class="bi bi-person-square"></i>Cadastrar Usuários
+					<i class="bi bi-person-square"></i> #{appMB.addUsers}
 				</p:link>
 		
 				<p:link outcome="addcomic" rendered="#{loginMB.admin}">
-				   <i class="bi bi-book-half"></i>Cadastrar Revistas
+				   <i class="bi bi-book-half"></i> #{appMB.addComics}
 				</p:link>
 				
 				<p:link outcome="addbox" rendered="#{loginMB.admin}">
-				   <i class="bi bi-box-fill"></i> Cadastrar Caixas
+				   <i class="bi bi-box-fill"></i> #{appMB.addBoxes}
 				</p:link>
 				
 				<p:link outcome="addborrowing" rendered="#{loginMB.admin}">
-				   <i class="bi bi-cart-plus-fill"></i>Cadastrar empréstimo
+				   <i class="bi bi-cart-plus-fill"></i> #{appMB.addBorrowings}
 				</p:link>
 		
 				<p:link outcome="showborrowings" rendered="#{loginMB.admin}">
-				   <i class="bi bi-cart-check-fill"></i>Histórico de empréstimos
+				   <i class="bi bi-cart-check-fill"></i> #{appMB.borrowingsHistory}
 				</p:link>
 				
 				<p:link outcome="showreport" rendered="#{loginMB.admin}">
-				   <i class="bi bi-postcard-fill"></i>Gerar relatório
+				   <i class="bi bi-postcard-fill"></i> #{appMB.generateReport}
 				</p:link>
 				
 				<!-- USER -->
 				<p:link outcome="showcomics" rendered="#{loginMB.user}">
-					<i class="bi bi-card-list"></i>Listar Revistas
+					<i class="bi bi-card-list"></i> #{appMB.listComics}
 				</p:link>
 				
 				<p:link outcome="addborrowing" rendered="#{loginMB.user}">
-				   <i class="bi bi-cart-plus-fill"></i>Solicitar empréstimo
+				   <i class="bi bi-cart-plus-fill"></i> #{appMB.doBorrow}
 				</p:link>
 				
 				<p:link outcome="showborrowings" rendered="#{loginMB.user}">
-				   <i class="bi bi-cart-check-fill"></i>Histórico de empréstimos
+				   <i class="bi bi-cart-check-fill"></i> #{appMB.borrowingsHistory}
 				</p:link>
 			</div>
 		</div>	
