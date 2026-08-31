@@ -27,11 +27,12 @@ public class Box {
      * Número identificador da caixa.
      */
 	@Column(nullable = false, unique = true)
-	private int number;
+	private Integer number;
 	
 	/**
      * Cor da caixa.
      */
+	@Column(nullable = false)
 	private String color;
 	
 	public int getId() {
@@ -42,11 +43,11 @@ public class Box {
 		this.id = id;
 	}
 	
-	public int getNumber() {
+	public Integer getNumber() {
 		return number;
 	}
 	
-	public void setNumber(int number) {
+	public void setNumber(Integer number) {
 		this.number = number;
 	}
 	

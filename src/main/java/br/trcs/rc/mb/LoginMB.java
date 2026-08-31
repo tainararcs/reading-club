@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import br.trcs.rc.model.User;
 import br.trcs.rc.utils.Consts;
+import br.trcs.rc.utils.MessagesConsts;
 import br.trcs.rc.utils.SecurityUtils;
 import br.trcs.rc.dao.UserDAO;
 import jakarta.annotation.PostConstruct;
@@ -127,7 +128,7 @@ public class LoginMB implements Serializable {
         if (user != null) {
         	// Verifica comfirmação de email.
         	if (!user.getConfirmedEmail()) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, Consts.ACTIVATED_ACCOUNT_ERROR, null));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, MessagesConsts.ACTIVATED_ACCOUNT_ERROR, null));
                 return null;
             }
         	
@@ -140,7 +141,7 @@ public class LoginMB implements Serializable {
         	return "home?faces-redirect=true";
         }
 
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, Consts.CREDENTIALS_ERROR, null));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, MessagesConsts.CREDENTIALS_ERROR, null));
         return null; // Permanece na página.
     }
 

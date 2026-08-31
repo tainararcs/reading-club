@@ -25,7 +25,7 @@
 	    <h:form>
 	        <p:messages autoUpdate="true" showDetail="false" />
 	        
-			<p:panelGrid columns="2">
+			<p:panelGrid columns="2" rendered="#{loginMB.admin}" >
 		        <p:inputText value="#{borrowingMB.userCpf}" placeholder="CPF do usuário" />
 				<p:commandButton value="Filtrar" action="#{borrowingMB.filterByUser}" update="borrowsTable" />
 		    </p:panelGrid>

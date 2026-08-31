@@ -11,9 +11,9 @@ import br.trcs.rc.model.Borrowing;
 import br.trcs.rc.model.Comic;
 import br.trcs.rc.model.User;
 import br.trcs.rc.utils.Consts;
+import br.trcs.rc.utils.FacesMessages;
+import br.trcs.rc.utils.MessagesConsts;
 import jakarta.annotation.PostConstruct;
-import jakarta.faces.application.FacesMessage;
-import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -143,8 +143,8 @@ public class BorrowingMB implements Serializable {
      */
 	public String insert() {
 		if (comicId == null) {
-    	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, Consts.SELECT_COMIC_ERROR));
-    	    return Consts.ADD_BORROW_PAGE;
+			FacesMessages.addErrorMessage(MessagesConsts.SELECT_COMIC_ERROR);
+    	    return null;
     	}
 		
 	    try {
@@ -162,11 +162,11 @@ public class BorrowingMB implements Serializable {
 	        DAO<Borrowing> dao = new DAO<>(Borrowing.class);
 	        dao.insert(borrowing);
 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(null, Consts.ADD_BORROW_SUCCESS));
-
+	        FacesMessages.addInfoMessage(MessagesConsts.ADD_BORROW_SUCCESS);
             borrowing = new Borrowing(); // Limpa o formulário.
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, Consts.ADD_BORROW_ERROR));
+        	FacesMessages.addErrorMessage(MessagesConsts.ADD_BORROW_ERROR);
+            return null;
         }
 	    
 	    return Consts.ADD_BORROW_PAGE;
@@ -184,12 +184,9 @@ public class BorrowingMB implements Serializable {
             DAO<Borrowing> dao = new DAO<>(Borrowing.class);
             dao.update(borrowing);
 
-            FacesContext.getCurrentInstance().addMessage(
-            	null, 
-            	new FacesMessage(FacesMessage.SEVERITY_INFO, null, Consts.RETURN_COMIC_SUCCESS + String.format(" (%d)", borrowing.getId()))
-            );
+            FacesMessages.addInfoMessage(MessagesConsts.RETURN_COMIC_SUCCESS + String.format(" (%d)", borrowing.getId()));
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, Consts.RETURN_COMIC_ERROR));
+        	FacesMessages.addErrorMessage(MessagesConsts.RETURN_COMIC_ERROR);
         }
     }
     
@@ -210,7 +207,7 @@ public class BorrowingMB implements Serializable {
         // Verifica se usuário já possui empréstimo em aberto.
         BorrowingDAO borrowingDAO = new BorrowingDAO(Borrowing.class);
         if (user != null && borrowingDAO.hasOpenBorrowing(user.getCpf())) {
-        	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, null, Consts.ALREADY_BORROW_ERROR));
+        	FacesMessages.addWarnMessage(MessagesConsts.ALREADY_BORROW_ERROR);
         	return null;
         }
         return user;
@@ -226,7 +223,7 @@ public class BorrowingMB implements Serializable {
     	
     	Comic comic = daoComic.findById(comicId);
     	if (comic == null || comic.getAvailability() == false)
-    	    throw new RuntimeException(Consts.UNAVAIABLE_COMIC_ERROR);
+    	    throw new RuntimeException(MessagesConsts.UNAVAIABLE_COMIC_ERROR);
 
         // Marca como indisponível.
         comic.setAvailability(false);

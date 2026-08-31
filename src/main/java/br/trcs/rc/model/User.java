@@ -42,6 +42,7 @@ public class User {
 	/**
      * Login do usuário no sistema.
      */
+	@Column(nullable = false, unique = true)
 	private String login;
 	
 	/**
@@ -70,7 +71,7 @@ public class User {
      * Utilizado para controle de envio de notificações e validação de comunicação.
      */
 	@Column(nullable = false)
-	private Boolean confirmedEmail;
+	private boolean confirmedEmail;
 	
 	public String getCpf() {
 		return cpf;
@@ -136,11 +137,11 @@ public class User {
 		this.email = email;
 	}
 
-	public Boolean getConfirmedEmail() {
+	public boolean getConfirmedEmail() {
 		return confirmedEmail;
 	}
 	
-	public void setConfirmedEmail(Boolean confirmedEmail) {
+	public void setConfirmedEmail(boolean confirmedEmail) {
 		this.confirmedEmail = confirmedEmail;
 	}
 }

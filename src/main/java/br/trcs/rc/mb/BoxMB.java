@@ -6,7 +6,8 @@ import java.util.List;
 import br.trcs.rc.dao.DAO;
 import br.trcs.rc.model.Box;
 import br.trcs.rc.utils.Consts;
-import jakarta.faces.application.FacesMessage;
+import br.trcs.rc.utils.FacesMessages;
+import br.trcs.rc.utils.MessagesConsts;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -66,26 +67,46 @@ public class BoxMB implements Serializable {
      *
      * @return página de cadastro de caixa.
      */
-	public String insert() {	
-		if (!loginMB.isAdmin()) 
-	        try {
-	            FacesContext.getCurrentInstance().getExternalContext().redirect(Consts.ACCESS_DENIED_HTML);
-	        } catch (Exception ignored) {}
+	public String insert() {
+		// Interrompe a execução do método.
+		if (!checkUserValues()) return null;
 
         try {
             DAO<Box> dao = new DAO<Box>(Box.class);
             dao.insert(box);
 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(null, Consts.ADD_BOX_SUCCESS));
-
+            FacesMessages.addInfoMessage(MessagesConsts.ADD_BOX_SUCCESS);
             box = new Box(); // Limpa o formulário.
         } catch (Exception e) {
         	if (e.getMessage().contains("duplicate key"))
-        		 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, Consts.ALREADY_BOX_ERROR));
+        		FacesMessages.addErrorMessage(MessagesConsts.ALREADY_BOX_ERROR);
         	else 
-        		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, Consts.ADD_BOX_ERROR));
+        		FacesMessages.addErrorMessage(MessagesConsts.ADD_BOX_ERROR);
+        	return null;
         }
         
         return Consts.ADD_BOX_PAGE;
 	}
+	
+	private boolean checkUserValues() {
+		if (!loginMB.isAdmin()) { 
+	        try {
+	            FacesContext.getCurrentInstance().getExternalContext().redirect(Consts.ACCESS_DENIED_HTML);
+	        } catch (Exception ignored) {}
+	        return false; 
+		}
+		
+		if (box.getNumber() == null) {
+			FacesMessages.addErrorMessage(MessagesConsts.EMPTY_FIELDS_ERROR);
+    	    return false;
+    	}
+		
+		if (box.getColor() == null || box.getColor().isBlank()) {
+			FacesMessages.addErrorMessage(MessagesConsts.EMPTY_FIELDS_ERROR);
+    	    return false;
+    	}
+		
+		return true;
+	}
+	
 }

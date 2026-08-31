@@ -7,7 +7,8 @@ import br.trcs.rc.dao.ComicDAO;
 import br.trcs.rc.dao.DAO;
 import br.trcs.rc.model.Comic;
 import br.trcs.rc.utils.Consts;
-import jakarta.faces.application.FacesMessage;
+import br.trcs.rc.utils.FacesMessages;
+import br.trcs.rc.utils.MessagesConsts;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -87,24 +88,51 @@ public class ComicMB implements Serializable {
      * @return página de cadastro de revista.
      */
 	public String insert() {
-		if (!loginMB.isAdmin()) 
-	        try {
-	            FacesContext.getCurrentInstance().getExternalContext().redirect(Consts.ACCESS_DENIED_HTML);
-	        } catch (Exception ignored) {}
-
+		// Interrompe a execução do método.
+		if (!checkUserValues()) return null;
+				
         try {
         	comic.setAvailability(true);
         	
             DAO<Comic> dao = new DAO<Comic>(Comic.class);
             dao.insert(comic);
 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(null, Consts.ADD_COMIC_SUCCESS));
-
+            FacesMessages.addInfoMessage(MessagesConsts.ADD_COMIC_SUCCESS);
             comic = new Comic(); // Limpa o formulário.
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, Consts.ADD_COMIC_ERROR));
+        	if (e.getMessage().contains("duplicate key"))
+        		FacesMessages.addErrorMessage(MessagesConsts.ALREADY_COMIC_ERROR);
+	       	else 
+	       		FacesMessages.addErrorMessage(MessagesConsts.ADD_COMIC_ERROR);
+            return null;
         }
         
         return Consts.ADD_COMIC_PAGE;
 	}
+	
+	private boolean checkUserValues() {
+		if (!loginMB.isAdmin()) { 
+	        try {
+	            FacesContext.getCurrentInstance().getExternalContext().redirect(Consts.ACCESS_DENIED_HTML);
+	        } catch (Exception ignored) {}
+	        return false; 
+		}
+		
+		if (comic.getCollection() == null || comic.getCollection().isBlank()) {
+			FacesMessages.addErrorMessage(MessagesConsts.EMPTY_FIELDS_ERROR);
+    	    return false;
+    	}
+		
+		if (comic.getEditionNumber() == null) {
+			FacesMessages.addErrorMessage(MessagesConsts.EMPTY_FIELDS_ERROR);
+    	    return false;
+    	}
+		
+		if (comic.getBoxId() == null) {
+			FacesMessages.addErrorMessage(MessagesConsts.SELECT_COMIC_ERROR);
+    	    return false;
+    	}
+		return true;
+	}
+	
 }

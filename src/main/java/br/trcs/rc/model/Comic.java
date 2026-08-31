@@ -22,11 +22,12 @@ public class Comic {
      */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private int id;
 	
 	/**
      * Nome da coleção à qual a revista pertence.
      */
+	@Column(nullable = false)
 	private String collection;
 	
 	/**
@@ -42,19 +43,20 @@ public class Comic {
 	/**
      * Indica se a revista está disponível para empréstimo.
      */
+	@Column(nullable = false)
 	private boolean availability;
 	
 	/**
      * Identificador da caixa onde a revista está armazenada.
      */
 	@Column(nullable = false)
-	private int boxId;
+	private Integer boxId;
 	
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
 	
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	
@@ -90,11 +92,11 @@ public class Comic {
 		this.availability = availability;
 	}
 	
-	public int getBoxId() {
+	public Integer getBoxId() {
 		return boxId;
 	}
 	
-	public void setBoxId(int boxId) {
+	public void setBoxId(Integer boxId) {
 		this.boxId = boxId;
 	}
 }

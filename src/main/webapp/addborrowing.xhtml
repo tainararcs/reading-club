@@ -44,10 +44,10 @@
 				</p:selectOneMenu>
 
 				<p:outputLabel for="checkoutDate" value="Data do Empréstimo" />
-				<p:datePicker id="checkoutDate" required="true" readonly="true" value="#{borrowingMB.borrowing.checkoutDate}" />
+				<p:datePicker id="checkoutDate" readonly="true" value="#{borrowingMB.borrowing.checkoutDate}" />
 				
 				<p:outputLabel for="expectedReturnDate" value="Data para retorno" />
-				<p:datePicker id="expectedReturnDate" required="true" readonly="true" value="#{borrowingMB.borrowing.expectedReturnDate}" />
+				<p:datePicker id="expectedReturnDate" readonly="true" value="#{borrowingMB.borrowing.expectedReturnDate}" />
 				
 				<p:commandButton value="#{appMB.registerBorrowing}" action="#{borrowingMB.insert}" ajax="false" />
 			</p:panel>
