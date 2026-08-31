@@ -1,4 +1,4 @@
-# ReadingClub – Sistema de Empréstimo de Revistas
+# ReadingClub - Sistema de Empréstimo de Revistas
 
 O **ReadingClub** é uma aplicação web desenvolvida em **Jakarta EE** com o objetivo de gerenciar o empréstimo de revistas em um clube de leitura.  
 
